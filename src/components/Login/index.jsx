@@ -8,11 +8,13 @@ import Button from '../../components/Button/index.jsx';
 
 import { BsArrowLeft } from 'react-icons/bs';
 
+import { login } from '../../utils/auth.js';
+
 function Login({ changeScreen }) {
   const dispatch = useDispatch();
   const users = useSelector(state => state.users);
-  const nameRef = useRef(null);
   const emailRef = useRef(null);
+  const passwordRef = useRef(null);
 
   const [isSuccess, setIsSuccess] = useState(false)
   const [isNotSuccess, setisNotSuccess] = useState(false)
@@ -31,69 +33,34 @@ function Login({ changeScreen }) {
       idName: 'password',
       type: 'password',
       isRequired: true,
-      ref: nameRef
+      ref: passwordRef
     }
   ]
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // const valueInput = {
-    //   name: nameRef.current.value,
-    //   email: emailRef.current.value,
-    //   cpf: Number(cpfRef.current.value),
-    //   fone: Number(foneRef.current.value),
-    // };
+    const valueInput = {
+      email: emailRef.current.value,
+      password: passwordRef.current.value,
+    };
 
-    // nameRef.current.classList.remove('error');
-    // emailRef.current.classList.remove('error');
-    // cpfRef.current.classList.remove('error');
-    // foneRef.current.classList.remove('error');
+    emailRef.current.classList.remove('error');
+    passwordRef.current.classList.remove('error');
 
-    // if (
-    //   valueInput.name === "" ||
-    //   valueInput.email === "" ||
-    //   valueInput.cpf === "" ||
-    //   valueInput.fone === ""
-    // ) {
-    //   // alert('Preencha todos os campos')
-    //   setisNotSuccess('Preencha todos os campos!');
-    // } else {
+    if (
+      valueInput.email === "" ||
+      valueInput.password === ""
+    ) {
+      setisNotSuccess('Preencha todos os campos!');
+    } else {
 
-    //   let isRegistred = false;
-    //   let arrayErrors = [];
-    //   users.forEach(value => {
-    //     if (value.email === valueInput.email) {
-    //       emailRef.current.classList.add('error');
-    //       isRegistred = true;
-    //       arrayErrors.push('email');
-    //     }
-    //     if (value.cpf === valueInput.cpf) {
-    //       cpfRef.current.classList.add('error');
-    //       isRegistred = true;
-    //       arrayErrors.push('cpf');
-    //     }
-    //     if (value.fone === valueInput.fone) {
-    //       foneRef.current.classList.add('error');
-    //       isRegistred = true;
-    //       arrayErrors.push('telefone');
-    //     }
-    //   });
-
-    //   const id = users.reverse()[0].id + 1;
-    //   valueInput.id = id;
-
-    //   if (!isRegistred) {
-    //     dispatch({ type: 'ADD_USER_LIST', payload: valueInput });
-    //     setIsSuccess(true);
-    //     setisNotSuccess(false);
-    //   } else {
-    //     let textError = arrayErrors.join(', ');
-    //     textError = textError.replace(textError[0], textError[0].toUpperCase());
-    //     setIsSuccess(false);
-    //     setisNotSuccess(textError);
-    //   }
-    // }
-    
+      const user = users.filter(value => value.email === valueInput.email && value.password === valueInput.password);
+      if (user.length) {
+        login(user.id);
+      } else {
+        setisNotSuccess('E-mail ou senha incorretos!');
+      }
+    }
   }
 
   return (
@@ -108,7 +75,7 @@ function Login({ changeScreen }) {
           <Button divClass="login button-login" type="submit" buttonText="Login" />
         </div>
       </form>
-      { isSuccess && <h3 className="textSuccess">Conta criada com sucesso!</h3> }
+      { isSuccess && <h3 className="textSuccess">Login realizado com sucesso!</h3> }
       { isNotSuccess && <h3 className="textError">{isNotSuccess} já cadastrados</h3> }
     </>
   );

@@ -33,3 +33,27 @@
     }
   }
 }
+
+@media only screen and (max-width: 1024px) {
+  .container {
+
+    .div-image {
+      width: 100%;
+      position: absolute;
+      z-index: -1;
+    }
+
+    .form {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .content-form {
+        background-color: white;
+        padding: 5%;
+        width: 90%;
+      }
+    }
+  }    
+}

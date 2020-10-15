@@ -14,7 +14,6 @@
   }
 
   input {
-    height: 80%;
     width: 100%;
     align-self: center;
     border: none;
@@ -54,4 +53,20 @@
     -webkit-box-shadow: 0 0 0 30px #d94d4d inset;
   }
 
+}
+
+@media only screen and (max-width: 1024px) {
+
+  .input-field {
+
+    margin-top: 1.3rem;
+
+    label {
+      margin: 0;
+    }
+
+    input {
+      height: 100%;
+    }
+  }
 }

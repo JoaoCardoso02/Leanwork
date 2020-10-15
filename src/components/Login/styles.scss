@@ -13,6 +13,10 @@
 
   .login.button-register {
     width: 35%;
+    button {
+      display: flex;
+      justify-content: center;
+    }
   }
 
   .login.button-login {

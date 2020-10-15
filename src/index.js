@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Home from './pages/Home/index.jsx';
+import Routes from './routes.js';
 
 import { Provider } from 'react-redux';
 import store from './store/index.js';
@@ -9,7 +9,7 @@ import './assets/css/global.scss';
 
 ReactDOM.render(
   <Provider store={store}>
-    <Home />
+    <Routes />
   </Provider>,
   document.getElementById('root')
 );
