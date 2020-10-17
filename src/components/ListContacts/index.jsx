@@ -3,13 +3,15 @@ import React from 'react';
 import './styles.scss';
 
 import { RiDeleteBin5Line, RiPencilLine } from 'react-icons/ri';
+import { BsPlusCircle } from 'react-icons/bs';
 
 import PropTypes from 'prop-types';
+import { getID } from '../../utils/auth';
 
-function ListContacts({ contacts, openModalAlterContact, openModalDelete }) {
+function ListContacts({ contacts, openModalAlterContact, openModalDelete, openModalCreateContact }) {
   return (
     <div className="list-contacts-content">
-      <h2 className="title-main">Meus contatos</h2>
+      <h2 className="title-main">Meus contatos <BsPlusCircle onClick={openModalCreateContact} /></h2>
       <div className="list">
         <ul>
           <li className="li-title">
@@ -19,7 +21,7 @@ function ListContacts({ contacts, openModalAlterContact, openModalDelete }) {
               <h3>Telefone</h3>
             </div>
           </li>
-          {contacts.map((contact, index) => (
+          {contacts.map((contact, index) => ( contact.idUser === Number(getID()) &&
             <li className='li-data' key={index}>
               <div className="data-contact-list">
                 <p>{contact.name}</p>

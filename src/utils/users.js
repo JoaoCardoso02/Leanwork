@@ -38,7 +38,6 @@ export const modifyDataUser = (id, data) => {
 
   const newArrayUsersWithDataModified = users.map(user => {
     if (user.id === Number(id)) {
-      console.log(user)
       user.name = data.name;
       user.email = data.email;
       user.cpf = data.cpf;
@@ -46,6 +45,10 @@ export const modifyDataUser = (id, data) => {
     }
     return user;
   })
-  console.log(newArrayUsersWithDataModified);
   localStorage.setItem(TOKEN_KEY, JSON.stringify(newArrayUsersWithDataModified));
+}
+
+export const deleteUser = (id) => {
+  const newUsers = JSON.parse(localStorage.getItem(TOKEN_KEY)).filter(user => user.id !== Number(id));
+  localStorage.setItem(TOKEN_KEY, JSON.stringify(newUsers));
 }

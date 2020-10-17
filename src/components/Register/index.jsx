@@ -114,8 +114,12 @@ function Register({ changeScreen }) {
         setIsSuccess(false);
         setisNotSuccess(textError);
       } else {
-        const id = users ? users.reverse()[0].id + 1 : 1;
-        valueInput.id = id;
+        if (users && users.length) {
+          const id = users.reverse()[0].id + 1;
+          valueInput.id = id;
+        } else {
+          valueInput.id = 1;
+        }
         insertUser(valueInput);
         setIsSuccess(true);
         setisNotSuccess(false);

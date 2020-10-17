@@ -4,7 +4,7 @@
   "description": "",
   "main": "./src/index.js",
   "scripts": {
-    "start": "webpack-dev-server --mode development --open --hot --host 192.168.10.4",
+    "start": "webpack-dev-server --mode development --open --hot --host 192.168.10.6",
     "build": "webpack --mode production"
   },
   "author": "",

@@ -6,12 +6,14 @@ const contactsDefault = [
     name: 'Pedro Roberto',
     email: 'pedro.roberto@gmail.com',
     fone: 4859656595,
+    idUser: 1
   },
   {
     id: 2,
     name: 'Vinicius dos Santos',
     email: 'vini.santos@gmail.com',
     fone: 4996264536,
+    idUser: 2
   }
 ]
 

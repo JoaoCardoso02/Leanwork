@@ -4,6 +4,8 @@ import { getID } from '../../utils/auth.js';
 
 import './styles.scss';
 
+import { RiDeleteBin5Line } from 'react-icons/ri';
+
 import Input from '../../components/Input/index.jsx';
 import Button from '../../components/Button/index.jsx';
 
@@ -120,7 +122,7 @@ function DataUser({ setModal }) {
 
   return (
     <div className="my-data-content">
-      <h2 className="title-main">Meus dados</h2>
+      <h2 className="title-main">Meus dados <RiDeleteBin5Line onClick={() => setModal('deleteUser')} /></h2>
       <form onSubmit={handleSubmit}>
         {fields.map(field => (
           <Input key={field.idName} idName={field.idName} valueLabel={field.valueLabel} type={field.type} required={field.isRequired} inputRef={field.ref} />

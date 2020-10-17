@@ -3,6 +3,16 @@
 .list-contacts-content {
   padding: 18% 18% 0 18%;
 
+  h2 svg {
+    font-size: 1.5rem;
+    transition: 0.3s all ease;
+    cursor: pointer;
+  }
+
+  h2 svg:hover {
+    color: $color_green;
+  }
+
   .list {
     height: 50vh;
     overflow-y: auto;
@@ -113,5 +123,11 @@
         }
       }
     }
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .list-contacts-content {
+    padding: 18% 5% 0 5%;
   }
 }

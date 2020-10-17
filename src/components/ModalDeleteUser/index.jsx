@@ -1,5 +1,7 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { deleteUser } from '../../utils/users.js';
+import { getID, logout } from '../../utils/auth.js';
+import { useHistory } from 'react-router-dom';
 
 import Button from '../Button/index.jsx';
 
@@ -7,19 +9,19 @@ import './styles.scss';
 
 import PropTypes from 'prop-types';
 
-
-function ModalDeleteContact({ clickCancel, idSelected }) {
-  const dispatch = useDispatch();
-  const contacts = useSelector(state => state.contacts);
+function ModalDeleteUser({ clickCancel }) {
+  
+  const history = useHistory();
 
 
   const handleDelete = (e) => {
     e.preventDefault();
+    const id = getID();
 
-    const newContacts = contacts.filter(contact => contact.id !== idSelected);
-    dispatch({ type: 'ADD_NEW_LIST', payload: newContacts });
-
+    deleteUser(Number(id))
     clickCancel();
+    logout();
+    history.push('/');
 
   }
 
@@ -34,9 +36,8 @@ function ModalDeleteContact({ clickCancel, idSelected }) {
   );
 }
 
-ModalDeleteContact.propTypes = {
-  clickCancel: PropTypes.func,
-  idSelect: PropTypes.number,
+ModalDeleteUser.propTypes = {
+  clickCancel: PropTypes.func
 }
 
-export default ModalDeleteContact;
+export default ModalDeleteUser;
