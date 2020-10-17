@@ -56,11 +56,15 @@ function Login({ changeScreen }) {
     ) {
       setisNotSuccess('Preencha todos os campos!');
     } else {
-      const user = users.filter(value => value.email === valueInput.email && value.password === valueInput.password);
-      if (user.length) {
-        login(user[0].id);
-        setIsSuccess(true);
-        history.push('/main');
+      if (users && users.length) {
+        const user = users.filter(value => value.email === valueInput.email && value.password === valueInput.password);
+        if (user.length) {
+          login(user[0].id);
+          setIsSuccess(true);
+          history.push('/main');
+        } else {
+          setisNotSuccess('E-mail ou senha incorretos!');
+        }
       } else {
         setisNotSuccess('E-mail ou senha incorretos!');
       }
