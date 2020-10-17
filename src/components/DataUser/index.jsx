@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { getUsers, alterPassword, modifyDataUser } from '../../utils/users.js';
+import { getUsers, modifyDataUser } from '../../utils/users.js';
 import { getID } from '../../utils/auth.js';
 
 import './styles.scss';

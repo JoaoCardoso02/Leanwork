@@ -2,14 +2,14 @@ import React, { useRef, useState } from 'react';
 import { getUsers } from '../../utils/users.js';
 import { useHistory } from 'react-router-dom';
 
-import './styles.scss';
-
 import Input from '../../components/Input/index.jsx';
 import Button from '../../components/Button/index.jsx';
 
 import { BsArrowLeft } from 'react-icons/bs';
 
 import { login } from '../../utils/auth.js';
+
+import './styles.scss';
 
 import PropTypes from 'prop-types';
 

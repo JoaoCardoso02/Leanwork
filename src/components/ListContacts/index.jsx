@@ -1,4 +1,5 @@
 import React from 'react';
+import { getID } from '../../utils/auth';
 
 import './styles.scss';
 
@@ -6,7 +7,6 @@ import { RiDeleteBin5Line, RiPencilLine } from 'react-icons/ri';
 import { BsPlusCircle } from 'react-icons/bs';
 
 import PropTypes from 'prop-types';
-import { getID } from '../../utils/auth';
 
 function ListContacts({ contacts, openModalAlterContact, openModalDelete, openModalCreateContact }) {
   return (
