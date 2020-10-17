@@ -21,6 +21,8 @@
     border-bottom: 3px solid $color_inputBorderColor;
     color: $color_inputWithoutFocus;
     outline: none;
+    padding: 0 0.5rem;
+    transition: 0.3s all ease;
   }
 
   input:focus {
@@ -44,13 +46,13 @@
   }  
 
   .error {
-    background: #d94d4d;
-    border-color: #d94d4d !important;
+    background: $color_red;
+    border-color: $color_red !important;
   }
 
   // Cor do texto do autocomplete
   .error:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0 30px #d94d4d inset;
+    -webkit-box-shadow: 0 0 0 30px $color_red inset;
   }
 
 }

@@ -1,25 +1,25 @@
-import React, { useRef, useState } from 'react';
-import { getUsers, insertUser } from '../../utils/users.js';
+import React, { useEffect, useRef, useState } from 'react';
+import { getUsers, alterPassword, modifyDataUser } from '../../utils/users.js';
+import { getID } from '../../utils/auth.js';
 
 import './styles.scss';
 
 import Input from '../../components/Input/index.jsx';
 import Button from '../../components/Button/index.jsx';
 
-import { BsArrowRight } from 'react-icons/bs';
-
 import PropTypes from 'prop-types';
 
-function Register({ changeScreen }) {
-  const [users, setUsers] = useState(getUsers())
+function DataUser({ setModal }) {
+
+  const [users, setUsers] = useState(getUsers());
+
+  const [isSuccess, setIsSuccess] = useState(false)
+  const [isNotSuccess, setisNotSuccess] = useState(false)
+
   const nameRef = useRef(null);
   const emailRef = useRef(null);
   const cpfRef = useRef(null);
   const foneRef = useRef(null);
-  const passwordRef = useRef(null);
-
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [isNotSuccess, setisNotSuccess] = useState(false);
 
   const fields = [
     {
@@ -49,31 +49,29 @@ function Register({ changeScreen }) {
       type: 'number',
       isRequired: true,
       ref: foneRef
-    },
-    {
-      valueLabel: 'Senha',
-      idName: 'password',
-      type: 'password',
-      isRequired: true,
-      ref: passwordRef
     }
-  ]
+  ];
+
+  useEffect(() => {
+    const id = getID();
+    const userLogged = users.filter(user => user.id === Number(id))[0];
+    
+    nameRef.current.value = userLogged.name;
+    emailRef.current.value = userLogged.email;
+    cpfRef.current.value = userLogged.cpf;
+    foneRef.current.value = userLogged.fone;
+    
+  }, [users])
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     const valueInput = {
       name: nameRef.current.value,
       email: emailRef.current.value,
       cpf: Number(cpfRef.current.value),
       fone: Number(foneRef.current.value),
-      password: passwordRef.current.value,
     };
-
-    nameRef.current.classList.remove('error');
-    emailRef.current.classList.remove('error');
-    cpfRef.current.classList.remove('error');
-    foneRef.current.classList.remove('error');
-    passwordRef.current.classList.remove('error');
 
     if (
       valueInput.name === "" ||
@@ -84,68 +82,63 @@ function Register({ changeScreen }) {
     ) {
       setisNotSuccess('Preencha todos os campos!');
     } else {
-
       let isRegistred = false;
       let arrayErrors = [];
 
       if (users) {
         users.forEach(value => {
-          if (value.email === valueInput.email) {
+          if ((value.email === valueInput.email) && (value.id !== Number(getID()))) {
             emailRef.current.classList.add('error');
             isRegistred = true;
             arrayErrors.push('email');
           }
-          if (value.cpf === valueInput.cpf) {
+          if ((value.cpf === valueInput.cpf) && (value.id !== Number(getID()))) {
             cpfRef.current.classList.add('error');
             isRegistred = true;
             arrayErrors.push('cpf');
           }
-          if (value.fone === valueInput.fone) {
+          if ((value.fone === valueInput.fone) && (Number(value.id) !== Number(getID()))) {
             foneRef.current.classList.add('error');
             isRegistred = true;
             arrayErrors.push('telefone');
           }
         });
       }
-
+    
       if (isRegistred) {
         let textError = arrayErrors.join(', ');
         textError = textError.replace(textError[0], textError[0].toUpperCase()) + ' já cadastrado(s)';
         setIsSuccess(false);
         setisNotSuccess(textError);
       } else {
-        const id = users ? users.reverse()[0].id + 1 : 1;
-        valueInput.id = id;
-        insertUser(valueInput);
-        setIsSuccess(true);
-        setisNotSuccess(false);
-        setUsers(getUsers());
+        modifyDataUser(getID(), valueInput);
+        setIsSuccess('Alterado com sucesso!');
       }
     }
-    
   }
 
+
   return (
-    <>
-      <h2 className="title" >Lean Cadastro</h2>
+    <div className="my-data-content">
+      <h2 className="title-main">Meus dados</h2>
       <form onSubmit={handleSubmit}>
-        {fields.map(row => (
-          <Input key={row.idName} idName={row.idName} valueLabel={row.valueLabel} type={row.type} required={row.isRequired} inputRef={row.ref} />
+        {fields.map(field => (
+          <Input key={field.idName} idName={field.idName} valueLabel={field.valueLabel} type={field.type} required={field.isRequired} inputRef={field.ref} />
         ))}
         <div className="group-buttons">
-          <Button divClass="register button-register" type="submit" buttonText="Cadastrar" />
-          <Button divClass="register button-login" type="button" buttonText="Login" icon={<BsArrowRight />} onClick={changeScreen} />
+          <Button divClass="alterData button-alter-password" type="button" buttonText="Alterar senha" onClick={() => setModal('alterPassword')} />
+          <Button divClass="alterData button-finish" type="submit" buttonText="Concluir" />
         </div>
       </form>
-      { isSuccess && <h3 className="textSuccess">Conta criada com sucesso!</h3> }
+      { isSuccess && <h3 className="textSuccess">{isSuccess}</h3> }
       { isNotSuccess && <h3 className="textError">{isNotSuccess}</h3> }
-    </>
+    </div>
   );
 }
 
-Register.propTypes = {
-  changeScreen: PropTypes.func,
+DataUser.propTypes = {
+  setModal: PropTypes.func,
 }
 
 
-export default Register;
+export default DataUser;

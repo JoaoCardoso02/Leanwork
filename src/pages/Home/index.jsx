@@ -10,7 +10,7 @@ function Home() {
 
   const changeScreen = useCallback(() => setIsRegisterScreen(!isRegisterScreen), [isRegisterScreen]);
   return (
-    <div className="container">
+    <div className="container-home">
       <div className="div-image" />
       <div className="form">
         <div className="content-form">

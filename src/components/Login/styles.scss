@@ -26,13 +26,13 @@
 }
 
 .textSuccess {
-  color: #2db92d;
+  color: $color_green;
   text-align: center;
   margin-top: 2rem;
 }
 
 .textError {
-  color: #d94d4d;
+  color: $color_red;
   text-align: center;
   margin-top: 2rem;
 }

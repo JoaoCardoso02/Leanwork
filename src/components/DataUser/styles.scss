@@ -1,0 +1,18 @@
+.my-data-content {
+  padding: 18% 18% 0 18%;
+  height: 100%;
+
+  form {
+    .alterData.button-alter-password {
+      width: 45%;
+      button {
+        display: flex;
+        justify-content: center;
+      }
+    }
+  
+    .alterData.button-finish {
+      width: 55%;
+    }
+  }
+}

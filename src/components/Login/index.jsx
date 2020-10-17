@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { getUsers } from '../../utils/users.js';
+import { useHistory } from 'react-router-dom';
 
 import './styles.scss';
 
@@ -10,15 +11,17 @@ import { BsArrowLeft } from 'react-icons/bs';
 
 import { login } from '../../utils/auth.js';
 
+import PropTypes from 'prop-types';
+
 function Login({ changeScreen }) {
-  const dispatch = useDispatch();
-  const users = useSelector(state => state.users);
+  const [users, setUsers] = useState(getUsers());
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
 
   const [isSuccess, setIsSuccess] = useState(false)
   const [isNotSuccess, setisNotSuccess] = useState(false)
 
+  const history = useHistory();
 
   const fields = [
     {
@@ -53,10 +56,11 @@ function Login({ changeScreen }) {
     ) {
       setisNotSuccess('Preencha todos os campos!');
     } else {
-
       const user = users.filter(value => value.email === valueInput.email && value.password === valueInput.password);
       if (user.length) {
-        login(user.id);
+        login(user[0].id);
+        setIsSuccess(true);
+        history.push('/main');
       } else {
         setisNotSuccess('E-mail ou senha incorretos!');
       }
@@ -76,9 +80,13 @@ function Login({ changeScreen }) {
         </div>
       </form>
       { isSuccess && <h3 className="textSuccess">Login realizado com sucesso!</h3> }
-      { isNotSuccess && <h3 className="textError">{isNotSuccess} já cadastrados</h3> }
+      { isNotSuccess && <h3 className="textError">{isNotSuccess}</h3> }
     </>
   );
+}
+
+Login.propTypes = {
+  changeScreen: PropTypes.func,
 }
 
 export default Login;

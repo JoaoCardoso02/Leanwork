@@ -1,0 +1,22 @@
+@import '../../assets/css/varibles';
+
+.container-main {
+  background-color: #f2f2fa;
+  height: 100vh;
+
+  .content {
+    width: 100vw;
+    display: flex;
+
+    > div {
+      width: 50%;
+    }
+
+    .title-main {
+      text-align: center;
+      font-size: 2rem;
+      font-weight: 400;
+    }
+
+  }
+}

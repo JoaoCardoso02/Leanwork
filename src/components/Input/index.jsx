@@ -4,11 +4,11 @@ import './styles.scss';
 
 import PropTypes from 'prop-types';
 
-function Input({ idName, valueLabel, type, required, inputRef }) {
+function Input({ idName, valueLabel, type, required, inputRef, ...props }) {
   return (
     <div className="input-field">
       <label htmlFor={idName}>{valueLabel}</label>
-      <input type={type} name={idName} id={idName} required={required} ref={inputRef} />
+      <input type={type} name={idName} id={idName} required={required} ref={inputRef} {...props}/>
     </div>
   );
 }
