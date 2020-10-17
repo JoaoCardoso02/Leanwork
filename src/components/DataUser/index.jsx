@@ -41,9 +41,22 @@ function DataUser({ setModal }) {
     {
       valueLabel: 'CPF',
       idName: 'cpf',
-      type: 'number',
+      type: 'text',
       isRequired: true,
-      ref: cpfRef
+      ref: cpfRef,
+      maxLength: 14,
+      minLength: 14,
+      onChange: function(input) {
+        let value = input.target.value;
+        value = value
+          .replace(/\D/g, '')
+          .replace(/(\d{3})(\d)/, '$1.$2')
+          .replace(/(\d{3})(\d)/, '$1.$2')
+          .replace(/(\d{3})(\d{1,2})/, '$1-$2')
+          .replace(/(-\d{2})\d+?$/, '$1')
+
+        input.target.value = value;
+      }
     },
     {
       valueLabel: 'Telefone',
@@ -71,17 +84,17 @@ function DataUser({ setModal }) {
     const valueInput = {
       name: nameRef.current.value,
       email: emailRef.current.value,
-      cpf: Number(cpfRef.current.value),
+      cpf: cpfRef.current.value,
       fone: Number(foneRef.current.value),
     };
 
     if (
-      valueInput.name === "" ||
-      valueInput.email === "" ||
-      valueInput.cpf === "" ||
-      valueInput.fone === "" ||
-      valueInput.password === ""
+      !valueInput.name ||
+      !valueInput.email ||
+      Number(valueInput.cpf.length) !== 14 ||
+      !valueInput.fone
     ) {
+      console.log(valueInput);
       setisNotSuccess('Preencha todos os campos!');
     } else {
       let isRegistred = false;
@@ -125,7 +138,7 @@ function DataUser({ setModal }) {
       <h2 className="title-main">Meus dados <RiDeleteBin5Line onClick={() => setModal('deleteUser')} /></h2>
       <form onSubmit={handleSubmit}>
         {fields.map(field => (
-          <Input key={field.idName} idName={field.idName} valueLabel={field.valueLabel} type={field.type} required={field.isRequired} inputRef={field.ref} />
+          <Input key={field.idName} idName={field.idName} valueLabel={field.valueLabel} type={field.type} required={field.isRequired} inputRef={field.ref}  maxLength={field.maxLength ? field.maxLength : null} minLength={field.minLength ? field.minLength : null}  onChange={field.onChange ? field.onChange : null} />
         ))}
         <div className="group-buttons">
           <Button divClass="alterData button-alter-password" type="button" buttonText="Alterar senha" onClick={() => setModal('alterPassword')} />

@@ -8,7 +8,7 @@ function Input({ idName, valueLabel, type, required, inputRef, ...props }) {
   return (
     <div className="input-field">
       <label htmlFor={idName}>{valueLabel}</label>
-      <input type={type} name={idName} id={idName} required={required} ref={inputRef} {...props}/>
+      <input type={type} name={idName} id={idName} required={required} ref={inputRef} {...props} />
     </div>
   );
 }

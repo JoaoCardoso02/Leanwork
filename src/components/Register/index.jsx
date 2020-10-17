@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { getUsers, insertUser } from '../../utils/users.js';
 
 import './styles.scss';
@@ -39,9 +39,22 @@ function Register({ changeScreen }) {
     {
       valueLabel: 'CPF',
       idName: 'cpf',
-      type: 'number',
+      type: 'text',
       isRequired: true,
-      ref: cpfRef
+      ref: cpfRef,
+      maxLength: 14,
+      minLength: 14,
+      onChange: function(input) {
+        let value = input.target.value;
+        value = value
+          .replace(/\D/g, '')
+          .replace(/(\d{3})(\d)/, '$1.$2')
+          .replace(/(\d{3})(\d)/, '$1.$2')
+          .replace(/(\d{3})(\d{1,2})/, '$1-$2')
+          .replace(/(-\d{2})\d+?$/, '$1')
+
+        input.target.value = value;
+      }
     },
     {
       valueLabel: 'Telefone',
@@ -64,7 +77,7 @@ function Register({ changeScreen }) {
     const valueInput = {
       name: nameRef.current.value,
       email: emailRef.current.value,
-      cpf: Number(cpfRef.current.value),
+      cpf: cpfRef.current.value,
       fone: Number(foneRef.current.value),
       password: passwordRef.current.value,
     };
@@ -74,17 +87,17 @@ function Register({ changeScreen }) {
     cpfRef.current.classList.remove('error');
     foneRef.current.classList.remove('error');
     passwordRef.current.classList.remove('error');
-
+    
     if (
-      valueInput.name === "" ||
-      valueInput.email === "" ||
-      valueInput.cpf === "" ||
-      valueInput.fone === "" ||
-      valueInput.password === ""
+      !valueInput.name ||
+      !valueInput.email ||
+      Number(valueInput.cpf.length) !== 14 ||
+      !valueInput.fone ||
+      !valueInput.password
     ) {
       setisNotSuccess('Preencha todos os campos!');
     } else {
-
+      console.log(valueInput.cpf.length == 14)
       let isRegistred = false;
       let arrayErrors = [];
 
@@ -133,8 +146,8 @@ function Register({ changeScreen }) {
     <>
       <h2 className="title" >Lean Cadastro</h2>
       <form onSubmit={handleSubmit}>
-        {fields.map(row => (
-          <Input key={row.idName} idName={row.idName} valueLabel={row.valueLabel} type={row.type} required={row.isRequired} inputRef={row.ref} />
+        {fields.map(field => (
+          <Input key={field.idName} idName={field.idName} valueLabel={field.valueLabel} type={field.type} required={field.isRequired} inputRef={field.ref} maxLength={field.maxLength ? field.maxLength : null} minLength={field.minLength ? field.minLength : null}  onChange={field.onChange ? field.onChange : null} />
         ))}
         <div className="group-buttons">
           <Button divClass="register button-register" type="submit" buttonText="Cadastrar" />
@@ -147,9 +160,6 @@ function Register({ changeScreen }) {
   );
 }
 
-Register.propTypes = {
-  changeScreen: PropTypes.func,
-}
 
 
 export default Register;

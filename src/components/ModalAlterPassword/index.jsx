@@ -52,7 +52,7 @@ function ModalAlterPassword({ clickCancel }) {
 
   return (
     <div className="modal-alter-password">
-      <h2>Alteração de contato</h2>
+      <h2>Alteração de senha</h2>
       <form onSubmit={handleAlterPassword}>
         <div>
           {fieldsAlterPassword.map(field => (
